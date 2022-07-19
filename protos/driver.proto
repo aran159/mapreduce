@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+service Driver {
+    // Sends a greeting
+    rpc assign_task (AssignTaskRequest) returns (AsignTaskReply) {}
+}
+
+// The request message containing the user's name.
+message AssignTaskRequest {
+    string name = 1;
+}
+
+// The response message containing the greetings
+message AsignTaskReply {
+    string message = 1;
+}
