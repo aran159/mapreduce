@@ -1,7 +1,6 @@
 import grpc
 from driver_pb2_grpc import DriverStub
 from driver_pb2 import AssignTaskRequest
-import time
 
 
 if __name__ == '__main__':
