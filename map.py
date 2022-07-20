@@ -45,8 +45,8 @@ def write_partition(map_id: int, reduce_id: int, words: Tuple[str]):
 
 
 
-def map(in_path: str, map_id: int, M: int) -> None:
-    with open(in_path, 'r') as in_file:
+def map(map_id: int, M: int) -> None:
+    with open(constants.MAP_INPUT_DIR + f'{constants.MAP_INPUT_FILE_PREFIX}_{map_id}', 'r') as in_file:
         words = tokenize(in_file.read())
 
     for reduce_id, words_in_partition in partition_words(words, M).items():

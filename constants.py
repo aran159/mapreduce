@@ -1,6 +1,8 @@
 TMP_DIR = '.tmp/'
 INTERMEDIATE_DIR = TMP_DIR + 'intermediate/'
+OUT_DIR = TMP_DIR + 'out/'
 MAP_INPUT_DIR = INTERMEDIATE_DIR + 'map_input/'
 REDUCE_INPUT_DIR = INTERMEDIATE_DIR + 'reduce_input/'
 MAP_INPUT_FILE_PREFIX = 'm'
 REDUCE_INPUT_FILE_PREFIX = 'mr'
+OUT_FILE_PREFIX = 'out'

@@ -1,0 +1,6 @@
+apple
+car
+apple
+banana
+banana
+bike
