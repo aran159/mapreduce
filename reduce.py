@@ -7,11 +7,11 @@ from typing import (
     Tuple
 )
 import constants
-from map import tokenize
+import utils
 
 
 def word_list_file_to_tuple(file_handler: TextIOWrapper) -> Tuple[str]:
-    return tuple(tokenize(file_handler.read()))
+    return tuple(utils.tokenize(file_handler.read()))
 
 
 def word_counts(words: Tuple[str]) -> Dict[str, int]:

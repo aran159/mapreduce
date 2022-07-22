@@ -2,34 +2,12 @@ from pathlib import Path
 from shutil import rmtree
 import pytest
 from map import (
-    tokenize,
     char_alphabet_position,
     partition_words,
     write_partition,
 )
 import string
 import constants
-
-
-def test_tokenize():
-    assert tokenize("""
-        Hello World! This, is, a, test. ##
-        @
-        Bye!
-
-        ##
-
-
-
-    """) == [
-        'hello',
-        'world',
-        'this',
-        'is',
-        'a',
-        'test',
-        'bye',
-    ]
 
 
 def test_char_alphabet_position():

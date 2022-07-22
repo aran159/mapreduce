@@ -1,6 +1,5 @@
 from pathlib import Path
-from shutil import rmtree
-from typing import Iterable, List
+from typing import Iterable
 
 from pytest import fixture
 from split import line_count

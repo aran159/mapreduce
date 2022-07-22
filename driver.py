@@ -11,6 +11,7 @@ from driver_pb2_grpc import (
     add_DriverServicer_to_server
 )
 from concurrent.futures import ThreadPoolExecutor
+import utils
 
 
 class Driver(DriverServicer):
@@ -36,11 +37,7 @@ class Driver(DriverServicer):
 
     @staticmethod
     def initialize_tmp_folder() -> None:
-        try:
-            rmtree(Path(constants.TMP_DIR))
-        except FileNotFoundError:
-            pass
-
+        utils.remove_tmp_dir()
         Path(constants.TMP_DIR).mkdir(exist_ok=True)
 
 
