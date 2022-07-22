@@ -1,14 +1,17 @@
+from glob import glob
 from io import TextIOWrapper
 from pathlib import Path
 from typing import (
     Dict,
+    List,
     Tuple
 )
 import constants
+from map import tokenize
 
 
-def input_to_tuple(file_handler: TextIOWrapper) -> Tuple[str]:
-    return tuple(file_handler.read().strip().split('\n'))
+def word_list_file_to_tuple(file_handler: TextIOWrapper) -> Tuple[str]:
+    return tuple(tokenize(file_handler.read()))
 
 
 def word_counts(words: Tuple[str]) -> Dict[str, int]:
@@ -27,8 +30,18 @@ def write_result(reduce_id: int, word_counts: Dict[str, int]):
             out_file.write(word + ' ' + str(count) + '\n')
 
 
-def reduce(map_id: int, reduce_id: int) -> None:
-    with open(constants.REDUCE_INPUT_DIR + f'{constants.REDUCE_INPUT_FILE_PREFIX}_{map_id}_{reduce_id}', 'r') as in_file:
-        words = input_to_tuple(in_file)
+def filter_file_paths_by_reduce_id(reduce_id: int) -> List[str]:
+    return glob(constants.REDUCE_INPUT_DIR + f'{constants.REDUCE_INPUT_FILE_PREFIX}-*-{reduce_id}.txt')
 
+
+def words_in_reduce_files(reduce_id: int) -> Tuple[str]:
+    words = []
+    for file_path in filter_file_paths_by_reduce_id(reduce_id):
+        with open(file_path, 'r') as in_file:
+            words.extend(word_list_file_to_tuple(in_file))
+    return tuple(words)
+
+
+def reduce(reduce_id: int) -> None:
+    words = words_in_reduce_files(reduce_id)
     write_result(reduce_id, word_counts(words))

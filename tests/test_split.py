@@ -36,12 +36,7 @@ def test_dir_line_count(split_test_data_dir: Path) -> None:
         (8, [7, ]),
     ]
 )
-def test_split_returns_expected_length_files(max_line_number, expected_length, split_test_data_dir: Path) -> None:
-    try:
-        rmtree(Path(constants.TMP_DIR))
-    except FileNotFoundError:
-        pass
-
+def test_split_returns_expected_length_files(max_line_number, expected_length, split_test_data_dir: Path, remove_tmp_dir) -> None:
     split_files(glob(f'{split_test_data_dir}/*', recursive=True), max_line_number)
 
     for path, expected_length in zip(glob(f'{constants.MAP_INPUT_DIR}/*'), expected_length):

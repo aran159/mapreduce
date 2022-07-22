@@ -39,7 +39,7 @@ def partition_words(words: List[str], M: int) -> Dict[int, Tuple[str]]:
 
 def write_partition(map_id: int, reduce_id: int, words: Tuple[str]):
     Path(constants.REDUCE_INPUT_DIR).mkdir(exist_ok=True, parents=True)
-    with open(constants.REDUCE_INPUT_DIR + f'{constants.REDUCE_INPUT_FILE_PREFIX}_{map_id}_{reduce_id}', 'w') as out_file:
+    with open(constants.REDUCE_INPUT_DIR + f'{constants.REDUCE_INPUT_FILE_PREFIX}_{map_id}_{reduce_id}.txt', 'w') as out_file:
         for word in words:
             out_file.write(word + '\n')
 

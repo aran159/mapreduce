@@ -18,6 +18,9 @@ def test_tokenize():
         Bye!
 
         ##
+
+
+
     """) == [
         'hello',
         'world',
@@ -51,19 +54,14 @@ def test_partition_words():
     assert partition_words(LIST_OF_WORDS, 5) == {0: ('dance',), 1: (), 2: ('app',), 3: ('building', 'building'), 4: ('car',)}
 
 
-def test_write_partition():
-    try:
-        rmtree(Path(constants.TMP_DIR))
-    except FileNotFoundError:
-        pass
-
+def test_write_partition(remove_tmp_dir):
     for map_id, reduce_id in (
         (0, 0),
         (0, 1),
         (1, 1)
     ):
         write_partition(map_id, reduce_id, ('my', 'car'))
-        expected_out_path = constants.REDUCE_INPUT_DIR + f'{constants.REDUCE_INPUT_FILE_PREFIX}_{map_id}_{reduce_id}'
+        expected_out_path = constants.REDUCE_INPUT_DIR + f'{constants.REDUCE_INPUT_FILE_PREFIX}_{map_id}_{reduce_id}.txt'
         Path(expected_out_path).exists()
         with open(expected_out_path, 'r') as f:
             assert f.read() == 'my\ncar\n'

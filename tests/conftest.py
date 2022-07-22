@@ -1,6 +1,7 @@
+from shutil import rmtree
 import pytest
 from pathlib import Path
-
+import constants
 
 @pytest.fixture(scope='session')
 def test_data_dir() -> Path:
@@ -10,3 +11,11 @@ def test_data_dir() -> Path:
 @pytest.fixture(scope='session')
 def test_text_file_path(test_data_dir: Path) -> Path:
     return test_data_dir / 'split' / 'file.txt'
+
+
+@pytest.fixture
+def remove_tmp_dir():
+    try:
+        rmtree(Path(constants.TMP_DIR))
+    except FileNotFoundError:
+        pass
