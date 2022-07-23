@@ -1,8 +1,6 @@
-from shutil import rmtree
 import pytest
 from pathlib import Path
-import constants
-import utils
+from mapreduce import utils
 
 
 @pytest.fixture(scope='session')

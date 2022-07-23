@@ -1,16 +1,16 @@
 syntax = "proto3";
 
+import "common.proto";
+
 service Driver {
-    // Sends a greeting
-    rpc assign_task (AssignTaskRequest) returns (AsignTaskReply) {}
+    rpc registerWorkerPort (empty) returns (empty) {};
+    rpc requestTaskAssignment (empty) returns (empty) {};
+    rpc notifyTaskStatus (empty) returns (empty) {};
 }
 
-// The request message containing the user's name.
-message AssignTaskRequest {
-    string name = 1;
-}
+message workerPort {}
 
-// The response message containing the greetings
-message AsignTaskReply {
-    string message = 1;
+message assignedTask {
+    int32 taskType = 1;
+    int32 id = 2;
 }

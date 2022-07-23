@@ -1,13 +1,12 @@
 import pytest
 from pathlib import Path
-from shutil import rmtree
-from split import (
+from mapreduce.driver.split import (
     line_count,
     dir_line_count,
     split_files,
 )
 from glob import glob
-import constants
+from mapreduce import constants
 
 
 @pytest.fixture

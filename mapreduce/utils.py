@@ -1,9 +1,9 @@
 from pathlib import Path
 from shutil import rmtree
 from typing import Tuple
-import constants
+import mapreduce.constants as constants
 import re
-import constants
+import mapreduce.constants as constants
 
 
 TOKENIZE_RE_PATTERN = r'[a-z]+'

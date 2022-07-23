@@ -2,15 +2,15 @@ from pathlib import Path
 from typing import Iterable
 
 from pytest import fixture
-from split import line_count
-from reduce import (
+from mapreduce.driver.split import line_count
+from mapreduce.worker.reduce import (
     filter_file_paths_by_reduce_id,
     word_list_file_to_tuple,
     word_counts,
     write_result,
     words_in_reduce_files
 )
-import constants
+from mapreduce import constants
 
 
 REDUCE_TEST_FILENAME = 'mr-0-0.txt'

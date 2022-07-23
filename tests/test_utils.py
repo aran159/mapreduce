@@ -1,4 +1,4 @@
-from utils import tokenize
+from mapreduce.utils import tokenize
 
 
 def test_tokenize():

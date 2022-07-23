@@ -1,13 +1,13 @@
 from pathlib import Path
 from shutil import rmtree
 import pytest
-from map import (
+from mapreduce.worker.map import (
     char_alphabet_position,
     partition_words,
     write_partition,
 )
 import string
-import constants
+from mapreduce import constants
 
 
 def test_char_alphabet_position():

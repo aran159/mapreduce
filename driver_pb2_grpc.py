@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import driver_pb2 as driver__pb2
+import common_pb2 as common__pb2
 
 
 class DriverStub(object):
@@ -14,19 +14,40 @@ class DriverStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.assign_task = channel.unary_unary(
-                '/Driver/assign_task',
-                request_serializer=driver__pb2.AssignTaskRequest.SerializeToString,
-                response_deserializer=driver__pb2.AsignTaskReply.FromString,
+        self.registerWorkerPort = channel.unary_unary(
+                '/Driver/registerWorkerPort',
+                request_serializer=common__pb2.empty.SerializeToString,
+                response_deserializer=common__pb2.empty.FromString,
+                )
+        self.requestTaskAssignment = channel.unary_unary(
+                '/Driver/requestTaskAssignment',
+                request_serializer=common__pb2.empty.SerializeToString,
+                response_deserializer=common__pb2.empty.FromString,
+                )
+        self.notifyTaskStatus = channel.unary_unary(
+                '/Driver/notifyTaskStatus',
+                request_serializer=common__pb2.empty.SerializeToString,
+                response_deserializer=common__pb2.empty.FromString,
                 )
 
 
 class DriverServicer(object):
     """Missing associated documentation comment in .proto file."""
 
-    def assign_task(self, request, context):
-        """Sends a greeting
-        """
+    def registerWorkerPort(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def requestTaskAssignment(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def notifyTaskStatus(self, request, context):
+        """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
@@ -34,10 +55,20 @@ class DriverServicer(object):
 
 def add_DriverServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'assign_task': grpc.unary_unary_rpc_method_handler(
-                    servicer.assign_task,
-                    request_deserializer=driver__pb2.AssignTaskRequest.FromString,
-                    response_serializer=driver__pb2.AsignTaskReply.SerializeToString,
+            'registerWorkerPort': grpc.unary_unary_rpc_method_handler(
+                    servicer.registerWorkerPort,
+                    request_deserializer=common__pb2.empty.FromString,
+                    response_serializer=common__pb2.empty.SerializeToString,
+            ),
+            'requestTaskAssignment': grpc.unary_unary_rpc_method_handler(
+                    servicer.requestTaskAssignment,
+                    request_deserializer=common__pb2.empty.FromString,
+                    response_serializer=common__pb2.empty.SerializeToString,
+            ),
+            'notifyTaskStatus': grpc.unary_unary_rpc_method_handler(
+                    servicer.notifyTaskStatus,
+                    request_deserializer=common__pb2.empty.FromString,
+                    response_serializer=common__pb2.empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -50,7 +81,7 @@ class Driver(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
-    def assign_task(request,
+    def registerWorkerPort(request,
             target,
             options=(),
             channel_credentials=None,
@@ -60,8 +91,42 @@ class Driver(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Driver/assign_task',
-            driver__pb2.AssignTaskRequest.SerializeToString,
-            driver__pb2.AsignTaskReply.FromString,
+        return grpc.experimental.unary_unary(request, target, '/Driver/registerWorkerPort',
+            common__pb2.empty.SerializeToString,
+            common__pb2.empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def requestTaskAssignment(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Driver/requestTaskAssignment',
+            common__pb2.empty.SerializeToString,
+            common__pb2.empty.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def notifyTaskStatus(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/Driver/notifyTaskStatus',
+            common__pb2.empty.SerializeToString,
+            common__pb2.empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

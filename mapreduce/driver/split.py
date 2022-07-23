@@ -2,7 +2,7 @@ from glob import glob
 from pathlib import Path
 from shutil import rmtree
 from typing import List
-import constants
+import mapreduce.constants as constants
 
 
 def line_count(path: str) -> int:

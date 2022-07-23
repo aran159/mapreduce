@@ -6,8 +6,8 @@ from typing import (
     List,
     Tuple
 )
-import constants
-import utils
+import mapreduce.constants as constants
+import mapreduce.utils as utils
 
 
 def word_list_file_to_tuple(file_handler: TextIOWrapper) -> Tuple[str]:

@@ -4,8 +4,8 @@ from typing import (
     Dict,
     Tuple
 )
-import constants
-import utils
+import mapreduce.constants as constants
+import mapreduce.utils as utils
 
 
 def char_alphabet_position(character: str) -> int:
