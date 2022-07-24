@@ -18,7 +18,7 @@ class DriverStub(object):
         self.healthCheck = channel.unary_unary(
                 '/Driver/healthCheck',
                 request_serializer=common__pb2.empty.SerializeToString,
-                response_deserializer=common__pb2.empty.FromString,
+                response_deserializer=driver__pb2.healthCheckResult.FromString,
                 )
         self.registerWorkerPort = channel.unary_unary(
                 '/Driver/registerWorkerPort',
@@ -70,7 +70,7 @@ def add_DriverServicer_to_server(servicer, server):
             'healthCheck': grpc.unary_unary_rpc_method_handler(
                     servicer.healthCheck,
                     request_deserializer=common__pb2.empty.FromString,
-                    response_serializer=common__pb2.empty.SerializeToString,
+                    response_serializer=driver__pb2.healthCheckResult.SerializeToString,
             ),
             'registerWorkerPort': grpc.unary_unary_rpc_method_handler(
                     servicer.registerWorkerPort,
@@ -110,7 +110,7 @@ class Driver(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Driver/healthCheck',
             common__pb2.empty.SerializeToString,
-            common__pb2.empty.FromString,
+            driver__pb2.healthCheckResult.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

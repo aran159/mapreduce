@@ -10,7 +10,8 @@ from driver_pb2_grpc import (
 from concurrent.futures import ThreadPoolExecutor
 from mapreduce import utils
 from driver_pb2 import (
-    assignedTask
+    assignedTask,
+    healthCheckResult
 )
 from common_pb2 import empty
 from worker_pb2_grpc import WorkerStub
@@ -40,7 +41,7 @@ class Driver(DriverServicer):
 
     def healthCheck(self, request, context):
         print('[Driver] Health check')
-        return empty()
+        return healthCheckResult(M=self._M)
 
     def initialize_task_list(self) -> None:
         self.tasks = Tasks([

@@ -26,6 +26,7 @@ class Worker(WorkerServicer):
         super().__init__()
         self._channel = None
         self._stub = None
+        self._M: int = None
 
     def connect_to_driver(self) -> None:
         self._channel = grpc.insecure_channel(f'localhost:{constants.DRIVER_PORT}')
@@ -36,6 +37,7 @@ class Worker(WorkerServicer):
     def wait_for_driver(self):
         print("[Worker] Waiting for driver to be ready")
         response = self._stub.healthCheck(empty(), wait_for_ready=True)
+        self._M = response.M
         print("[Worker] Driver is ready")
 
     def main_loop(self):
@@ -69,9 +71,7 @@ class Worker(WorkerServicer):
 
     def execute_task(self, task_type: TaskType, task_id: int):
         if task_type == TaskType.MAP:
-            # TODO: M comes from the driver
-            M = 1
-            map(task_id, M)
+            map(task_id, self._M)
         elif task_type == TaskType.REDUCE:
             reduce(task_id)
         else:
