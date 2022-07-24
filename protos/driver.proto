@@ -3,14 +3,23 @@ syntax = "proto3";
 import "common.proto";
 
 service Driver {
-    rpc registerWorkerPort (empty) returns (empty) {};
-    rpc requestTaskAssignment (empty) returns (empty) {};
-    rpc notifyTaskStatus (empty) returns (empty) {};
+    rpc healthCheck (empty) returns (empty) {};
+    rpc registerWorkerPort (workerPort) returns (empty) {};
+    rpc requestTaskAssignment (empty) returns (assignedTask) {};
+    rpc notifyTaskStatus (assignedTaskResult) returns (empty) {};
 }
 
-message workerPort {}
+message workerPort {
+    int32 portNumber = 1;
+}
 
 message assignedTask {
     int32 taskType = 1;
     int32 id = 2;
+}
+
+message assignedTaskResult {
+    int32 taskType = 1;
+    int32 id = 2;
+    int32 statusCode = 3;
 }

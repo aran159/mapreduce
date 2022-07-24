@@ -32,7 +32,7 @@ def test_write_result(remove_tmp_dir):
     test_input = {'apple': 2, 'banana': 2, 'bike': 1, 'car': 1}
     write_result(0, test_input)
 
-    expected_out_path = constants.OUT_DIR + f'{constants.OUT_FILE_PREFIX}-{0}'
+    expected_out_path = constants.OUT_DIR + f'{constants.OUT_FILE_PREFIX}-{0}.txt'
     assert Path(expected_out_path).exists()
     assert line_count(expected_out_path) == len(test_input.keys())
 

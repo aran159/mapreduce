@@ -25,7 +25,7 @@ def word_counts(words: Tuple[str]) -> Dict[str, int]:
 
 def write_result(reduce_id: int, word_counts: Dict[str, int]):
     Path(constants.OUT_DIR).mkdir(exist_ok=True, parents=True)
-    with open(constants.OUT_DIR + f'{constants.OUT_FILE_PREFIX}-{reduce_id}', 'w') as out_file:
+    with open(constants.OUT_DIR + f'{constants.OUT_FILE_PREFIX}-{reduce_id}.txt', 'w') as out_file:
         for word, count in word_counts.items():
             out_file.write(word + ' ' + str(count) + '\n')
 

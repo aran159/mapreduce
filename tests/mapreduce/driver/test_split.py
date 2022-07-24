@@ -26,11 +26,11 @@ def test_dir_line_count(split_test_data_dir: Path) -> None:
     "max_line_number, expected_length",
     [
         (1, [1 for _ in range(7)]),
-        (2, [1, 2, 2, 2]),
-        (3, [1, 3, 3]),
-        (4, [3, 4]),
-        (5, [2, 5]),
-        (6, [1, 6]),
+        (2, [2, 2, 2, 1]),
+        (3, [3, 3, 1]),
+        (4, [4, 3]),
+        (5, [5, 2]),
+        (6, [6, 1]),
         (7, [7, ]),
         (8, [7, ]),
     ]
@@ -38,7 +38,9 @@ def test_dir_line_count(split_test_data_dir: Path) -> None:
 def test_split_returns_expected_length_files(max_line_number, expected_length, split_test_data_dir: Path, remove_tmp_dir) -> None:
     split_files(glob(f'{split_test_data_dir}/*', recursive=True), max_line_number)
 
-    for path, expected_length in zip(glob(f'{constants.MAP_INPUT_DIR}/*'), expected_length):
+    paths = glob(f'{constants.MAP_INPUT_DIR}/*')
+    paths.sort()
+    for path, expected_length in zip(paths, expected_length):
         assert line_count(path) == expected_length
 
 
