@@ -51,7 +51,8 @@ def file_lengths(total_line_count: int, desired_n_files: int) -> Tuple[int]:
     ideal_lines_per_file: float = total_line_count / desired_n_files
     min_lines_per_file: int = floor(total_line_count / desired_n_files)
 
-    assert min_lines_per_file > 0
+    assert min_lines_per_file > 0, \
+        f"Desired number of files ({desired_n_files}) cannot be greater than the input's total number of lines"
 
     rest = ideal_lines_per_file - min_lines_per_file
 

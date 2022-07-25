@@ -42,5 +42,6 @@ def map(map_id: int, M: int) -> None:
     with open(constants.MAP_INPUT_DIR + f'{constants.MAP_INPUT_FILE_PREFIX}-{map_id}.txt', 'r') as in_file:
         words = utils.tokenize(in_file.read())
 
+    words = tuple(sorted(words))
     for reduce_id, words_in_partition in partition_words(words, M).items():
         write_partition(map_id, reduce_id, words_in_partition)
