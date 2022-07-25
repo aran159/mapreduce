@@ -78,19 +78,10 @@ class Worker(WorkerServicer):
             raise ValueError
 
     def kill(self):
-        global server
-        server.stop(0)
         quit()
 
 def run():
-    port = constants.DRIVER_PORT + 1
     worker = Worker()
-
-    global server
-    server = grpc.server(futures.ThreadPoolExecutor(max_workers=4))
-    add_WorkerServicer_to_server(worker, server)
-    server.add_insecure_port(f'[::]:{port}')
-    server.start()
 
     worker.connect_to_driver()
     worker.wait_for_driver()

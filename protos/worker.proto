@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-import "common.proto";
-
-service Worker {
-    rpc kill (empty) returns (empty);
-}

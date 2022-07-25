@@ -1,5 +1,6 @@
 from math import ceil
 from pathlib import Path
+from threading import Thread
 from typing import List
 import mapreduce.constants as constants
 import grpc
@@ -27,6 +28,7 @@ from mapreduce.model import (
     Tasks,
     Task
 )
+from time import sleep
 
 
 class Driver(DriverServicer):
@@ -55,6 +57,7 @@ class Driver(DriverServicer):
         print(f'[Driver] Task requested')
         if self.tasks.tasks_terminated:
             print(f'[Driver] All tasks done. Shutting down driver and workers')
+            Thread(target=self.kill).start()
             return constants.ALL_TASKS_COMPLETED
 
         pending_tasks = self.tasks.filter(status=TaskStatus.PENDING)
@@ -101,6 +104,8 @@ class Driver(DriverServicer):
         self.kill()
 
     def kill(self) -> None:
+        sleep(constants.DRIVER_WAIT_TIME_UNTIL_SHUTTING_DOWN)
+
         global server
         server.stop(0)
         quit()

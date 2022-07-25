@@ -20,11 +20,6 @@ class DriverStub(object):
                 request_serializer=common__pb2.empty.SerializeToString,
                 response_deserializer=driver__pb2.healthCheckResult.FromString,
                 )
-        self.registerWorkerPort = channel.unary_unary(
-                '/Driver/registerWorkerPort',
-                request_serializer=driver__pb2.workerPort.SerializeToString,
-                response_deserializer=common__pb2.empty.FromString,
-                )
         self.requestTaskAssignment = channel.unary_unary(
                 '/Driver/requestTaskAssignment',
                 request_serializer=common__pb2.empty.SerializeToString,
@@ -41,12 +36,6 @@ class DriverServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def healthCheck(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
-
-    def registerWorkerPort(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -71,11 +60,6 @@ def add_DriverServicer_to_server(servicer, server):
                     servicer.healthCheck,
                     request_deserializer=common__pb2.empty.FromString,
                     response_serializer=driver__pb2.healthCheckResult.SerializeToString,
-            ),
-            'registerWorkerPort': grpc.unary_unary_rpc_method_handler(
-                    servicer.registerWorkerPort,
-                    request_deserializer=driver__pb2.workerPort.FromString,
-                    response_serializer=common__pb2.empty.SerializeToString,
             ),
             'requestTaskAssignment': grpc.unary_unary_rpc_method_handler(
                     servicer.requestTaskAssignment,
@@ -111,23 +95,6 @@ class Driver(object):
         return grpc.experimental.unary_unary(request, target, '/Driver/healthCheck',
             common__pb2.empty.SerializeToString,
             driver__pb2.healthCheckResult.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
-
-    @staticmethod
-    def registerWorkerPort(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Driver/registerWorkerPort',
-            driver__pb2.workerPort.SerializeToString,
-            common__pb2.empty.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
