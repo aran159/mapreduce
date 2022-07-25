@@ -9,7 +9,7 @@
             "type": "python",
             "request": "launch",
             "program": "${workspaceFolder}/driver.py",
-            "args": ["-N", "2", "-M" , "5", "./tests/data/split/"],
+            "args": ["-N", "5", "-M" , "2", "./tests/data/split/"],
             "console": "integratedTerminal",
             "justMyCode": true
         },

@@ -17,7 +17,8 @@ from common_pb2 import empty
 from worker_pb2_grpc import WorkerStub
 from .split import (
     split_files,
-    dir_line_count
+    dir_line_count,
+    file_lengths,
 )
 from glob import glob
 from mapreduce.model import (
@@ -89,7 +90,9 @@ class Driver(DriverServicer):
             self.tasks.set_status(notified_task_type, notified_task_id, TaskStatus.DONE)
             return empty()
         else:
-            raise Exception(f'[Driver] {notified_task_type.name} task {notified_task_id} failed at worker')
+            print(f'[Driver] {notified_task_type.name} task {notified_task_id} failed at worker')
+            self.tasks.set_status(notified_task_type, notified_task_id, TaskStatus.PENDING)
+            return empty()
 
     def terminate(self) -> None:
         channel = grpc.insecure_channel(f'localhost:{constants.DRIVER_PORT + 1}')
@@ -107,8 +110,7 @@ class Driver(DriverServicer):
     def split_input_files(N: int, input_dir: str) -> None:
         input_file_paths = glob(str(Path(input_dir) / '*'))
         total_line_count = dir_line_count(input_file_paths)
-        n_lines_per_map = ceil(total_line_count / N)
-        split_files(input_file_paths, n_lines_per_map)
+        split_files(input_file_paths, file_lengths(total_line_count, N))
         print('[Driver] Input files splitted. Ready to start with map tasks')
 
 

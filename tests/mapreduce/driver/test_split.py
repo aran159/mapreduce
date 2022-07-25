@@ -4,6 +4,7 @@ from mapreduce.driver.split import (
     line_count,
     dir_line_count,
     split_files,
+    file_lengths,
 )
 from glob import glob
 from mapreduce import constants
@@ -23,28 +24,42 @@ def test_dir_line_count(split_test_data_dir: Path) -> None:
 
 
 @pytest.mark.parametrize(
-    "max_line_number, expected_length",
+    "input_, expected_lengths",
     [
-        (1, [1 for _ in range(7)]),
-        (2, [2, 2, 2, 1]),
-        (3, [3, 3, 1]),
-        (4, [4, 3]),
-        (5, [5, 2]),
-        (6, [6, 1]),
-        (7, [7, ]),
-        (8, [7, ]),
+        ((7, ), (7, )),
+        ((4, 3), (4, 3)),
+        ((3, 2, 2), (3, 2, 2)),
+        ((2, 2, 2, 1), (2, 2, 2, 1)),
+        ((2, 2, 1, 1, 1), (2, 2, 1, 1, 1)),
+        ((2, 1, 1, 1, 1, 1), (2, 1, 1, 1, 1, 1)),
+        ((1, 1, 1, 1, 1, 1, 1), (1, 1, 1, 1, 1, 1, 1)),
     ]
 )
-def test_split_returns_expected_length_files(max_line_number, expected_length, split_test_data_dir: Path, remove_tmp_dir) -> None:
-    split_files(glob(f'{split_test_data_dir}/*', recursive=True), max_line_number)
+def test_split_returns_expected_length_files(input_, expected_lengths, split_test_data_dir: Path, remove_tmp_dir) -> None:
+    split_files(glob(f'{split_test_data_dir}/*', recursive=True), input_)
 
     paths = glob(f'{constants.MAP_INPUT_DIR}/*')
     paths.sort()
-    for path, expected_length in zip(paths, expected_length):
-        assert line_count(path) == expected_length
+    for path, expected_lengths in zip(paths, expected_lengths):
+        assert line_count(path) == expected_lengths
 
 
-def test_split_raises_value_error(split_test_data_dir: Path) -> None:
-    for invalid_argument in (-1, 0):
-        with pytest.raises(ValueError):
-            split_files(glob(f'{split_test_data_dir}/*', recursive=True), invalid_argument)
+@pytest.mark.parametrize(
+    "input_, expected",
+    [
+        ((7, 1), (7, )),
+        ((7, 2), (4, 3)),
+        ((7, 3), (3, 2, 2)),
+        ((7, 4), (2, 2, 2, 1)),
+        ((7, 5), (2, 2, 1, 1, 1)),
+        ((7, 6), (2, 1, 1, 1, 1, 1)),
+        ((7, 7), (1, 1, 1, 1, 1, 1, 1)),
+    ]
+)
+def test_file_lengths(input_, expected):
+    assert file_lengths(*input_) == expected
+
+
+def test_file_lengths_raises_assertion_error():
+    with pytest.raises(AssertionError):
+        file_lengths(7, 8)
